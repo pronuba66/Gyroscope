@@ -56,14 +56,12 @@
 			var phi_start = gyro.gyroCamera.phi;
 			var theta_start = gyro.gyroCamera.theta;
 			$(this).mousemove(function(e) {
-				var deltaX = e.pageX - mouseX_start;
+				var deltaX = mouseX_start - e.pageX;
 				var deltaY = mouseY_start - e.pageY;
 				gyro.gyroCamera.phi = phi_start + deltaY/256;
-				gyro.gyroCamera.phi -= (Math.PI/180)*5;
 				if(gyro.gyroCamera.phi<Math.PI*(5/180)) {
 					gyro.gyroCamera.phi = Math.PI*(5/180);
 				}
-				gyro.gyroCamera.phi += (Math.PI/180)*5;
 				if(gyro.gyroCamera.phi>Math.PI-Math.PI*(30/180)) {
 					gyro.gyroCamera.phi = Math.PI-Math.PI*(30/180);
 				}
