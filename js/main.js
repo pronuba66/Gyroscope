@@ -45,7 +45,9 @@
 			gyro.frameRateScale = 1/parseInt($(this).val());
 		});
 		$('#form').click(function(e) {
-			$("#form, #form *").blur(); 
+			$("#form, #form *").blur();
+			$('#canvas').focus();
+			$('#canvas').click(); 
 		});
 		$('#form .button').click(function(e) {
 			$('#form').toggleClass('hidden')
@@ -59,7 +61,9 @@
 		$('#form').on('mouseleave', function(e) {
 			$('#form').css({opacity: 1 });
 		});
-		$('canvas').focus();
+		$('#canvas').attr('tabindex', '-1');
+		$('#canvas').focus();
+		$('#canvas').click();
 		$('canvas').mousedown(function(e) {
 			var mouseX_start = e.pageX;
 			var mouseY_start = e.pageY;
