@@ -175,7 +175,7 @@ function _gyro_arrows(gyro) {
 		gyro.pivot.updateMatrixWorld();
 		gyro.group.updateMatrixWorld();
 		var v_group = new THREE.Vector3().setFromMatrixPosition(gyro.group.matrixWorld);
-		gyro.precessionVelocity = ((Math.log(Math.cos(0)) - Math.log(Math.cos(gyro.angleMax)))*2*Math.sin(gyro.angle))/(Math.pow(gyro.rotationalVelocity, 2)*1024*16);
+		gyro.precessionVelocity = ((Math.log(Math.cos(0)) - Math.log(Math.cos(gyro.angleMax)))*2*Math.sin(gyro.angle))/(Math.pow(gyro.rotationalVelocity, 2)*1024*64);
 		for(var i=0; i<gyro.numberOfSpheres; i++) {
 			gyro.spheres[i].updateMatrixWorld();
 			var a_rotational = (i/gyro.numberOfSpheres)*(2*Math.PI)+gyro.group.rotation.y;
