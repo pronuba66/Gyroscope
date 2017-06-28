@@ -148,11 +148,13 @@ function _gyro_gyro(gyro) {
 		});
 	}
 	parent.physics = function() {
-		if(parent.isAccelerating) {1
-			gyro.rotationalVelocity += gyro.rotationalAcceleration;
+		if(!gyro.pause) {
+			if(parent.isAccelerating) {
+				gyro.rotationalVelocity += gyro.rotationalAcceleration*gyro.frameRateScale;
+			}
+			gyro.group.rotation.y += gyro.rotationalVelocity*gyro.frameRateScale;
+			gyro.pivot.rotation.y -= gyro.precessionVelocity*gyro.frameRateScale;
 		}
-		gyro.group.rotation.y += gyro.rotationalVelocity;
 		gyro.pivot.rotation.z = gyro.angle;
-		gyro.pivot.rotation.y -= gyro.precessionVelocity;
 	}
 }

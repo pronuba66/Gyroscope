@@ -1,11 +1,10 @@
 
 "use strict";
 (function() {
-	var pause = false;
 
-	var frameSkip = 1;
-	var frameSkipCount = 0;
 	var gyro = new _gyro_scene();
+	gyro.pause = false;
+	gyro.frameRateScale = 1;
 	new _gyro_renderer(gyro);
 	new _gyro_lights(gyro);
 	new _gyro_camera(gyro);
@@ -24,7 +23,7 @@
 		$(document).on('keydown', function(e) {
 			switch(e.keyCode) {
 				case 80: {
-					pause = !pause;
+					gyro.pause = !gyro.pause;
 					break;
 				}
 			}
@@ -33,8 +32,7 @@
 			e.stopPropagation();
 		});
 		$('#form input[name="sspeed"').change(function() {
-			frameSkip = $(this).val();
-			frameSkipCount = 0;
+			gyro.frameRateScale = 1/parseInt($(this).val());
 		});
 		$('#form').click(function(e) {
 			$("#form, #form *").blur(); 
@@ -79,17 +77,13 @@
 	}
 
 	function animate() {
-		if(frameSkipCount%frameSkip == 0) {
-			if(!pause) {
-				gyro.physics();
-				gyro.gyroLights.physics();
-				gyro.gyroGyro.physics();
-				gyro.gyroArrows.physics();
-			}
-		}
-		frameSkipCount++;
+		gyro.physics();
+		gyro.gyroLights.physics();
 		gyro.gyroCamera.physics();
+		gyro.gyroGyro.physics();
+		gyro.gyroArrows.physics();
 		gyro.gyroRenderer.renderer.render(gyro.scene, gyro.camera);
+		gyro.frameSkipCount++;
 	}
 	function fpsControl(fps, callback) {
 		var delay = 1000/fps;
@@ -100,10 +94,10 @@
 			if(time === null) {
 				time = timestamp;
 			}
-			var seg = Math.floor((timestamp-time)/delay); // calc frame no.
-			if (seg>frame) {                                // moved to next frame?
-				frame = seg;                                  // update
-				callback({                                    // callback function
+			var seg = Math.floor((timestamp-time)/delay);
+			if (seg>frame) {
+				frame = seg;
+				callback({
 					time: timestamp,
 					frame: frame
 				})
