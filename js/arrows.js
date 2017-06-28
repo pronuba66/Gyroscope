@@ -90,7 +90,7 @@ function _gyro_arrows(gyro) {
 		// Torque reference axis
 		gyro.scene.add(parent.arrowHelperReferenceTorqueAxis);
 
-		$('#form input[name="fgravity"').click(function(e) {
+		$('#form input[name="fgravity"]').click(function(e) {
 			if($(this).is(':checked')) {
 				$(parent.arrowHelperAccelerationGravity).each(function(key, value) {
 					value.visible = true;
@@ -101,7 +101,7 @@ function _gyro_arrows(gyro) {
 				});
 			}
 		});
-		$('#form input[name="frotational"').click(function(e) {
+		$('#form input[name="frotational"]').click(function(e) {
 			if($(this).is(':checked')) {
 				$(parent.arrowHelperAccelerationRotational).each(function(key, value) {
 					value.visible = true;
@@ -112,7 +112,7 @@ function _gyro_arrows(gyro) {
 				});
 			}
 		});
-		$('#form input[name="ftorque"').click(function(e) {
+		$('#form input[name="ftorque"]').click(function(e) {
 			if($(this).is(':checked')) {
 				$(parent.arrowHelperTorque).each(function(key, value) {
 					value.visible = true;
@@ -123,7 +123,7 @@ function _gyro_arrows(gyro) {
 				});
 			}
 		});
-		$('#form input[name="ftorquevertical"').click(function(e) {
+		$('#form input[name="ftorquevertical"]').click(function(e) {
 			if($(this).is(':checked')) {
 				$(parent.arrowHelperTorqueVertical).each(function(key, value) {
 					value.visible = true;
@@ -134,7 +134,7 @@ function _gyro_arrows(gyro) {
 				});
 			}
 		});
-		$('#form input[name="ftorquereference"').click(function(e) {
+		$('#form input[name="ftorquereference"]').click(function(e) {
 			if($(this).is(':checked')) {
 				$(parent.arrowHelperReferenceTorqueArm).each(function(key, value) {
 					value.visible = true;
@@ -147,7 +147,7 @@ function _gyro_arrows(gyro) {
 				parent.arrowHelperReferenceTorqueAxis.visible = false;
 			}
 		});
-		$('#form input[name="mrotational"').click(function(e) {
+		$('#form input[name="mrotational"]').click(function(e) {
 			if($(this).is(':checked')) {
 				$(parent.arrowHelperVeclotyRotational).each(function(key, value) {
 					value.visible = true;
@@ -158,7 +158,7 @@ function _gyro_arrows(gyro) {
 				});
 			}
 		});
-		$('#form input[name="mprecession"').click(function(e) {
+		$('#form input[name="mprecession"]').click(function(e) {
 			if($(this).is(':checked')) {
 				$(parent.arrowHelperVelocityPrecession).each(function(key, value) {
 					value.visible = true;

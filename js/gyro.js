@@ -5,7 +5,7 @@ function _gyro_gyro(gyro) {
 	var parent = gyro.gyroGyro = this;
 
 	gyro.isTranslucent = true;
-	$('#form input[name="malpha"').prop('checked', gyro.isTranslucent);
+	$('#form input[name="malpha"]').prop('checked', gyro.isTranslucent);
 
 	gyro.rotationalAcceleration = (Math.PI/180)*0.005;
 	gyro.rotationalVelocity = gyro.rotationalAcceleration*256;
@@ -108,14 +108,14 @@ function _gyro_gyro(gyro) {
 		gyro.pivot.add(gyro.group);
 		gyro.pivot.rotation.z = this.angle;
 		gyro.scene.add(gyro.pivot);
-		$('#form input[name="malpha"').click(function(e) {
+		$('#form input[name="malpha"]').click(function(e) {
 			if($(this).is(':checked')) {
 				gyro.isTranslucent = true;
 			} else {
 				gyro.isTranslucent = false;
 			}
 		});
-		$('#form input[name="snutation"').change(function() {
+		$('#form input[name="snutation"]').change(function() {
 			var nutation = $(this).val();
 			gyro.angle = -($(this).val()/180)*Math.PI;
 		});
