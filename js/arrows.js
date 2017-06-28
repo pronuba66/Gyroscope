@@ -197,7 +197,7 @@ function _gyro_arrows(gyro) {
 			// (sin(a_torqueArm)/cos(a_torqueArm)
 			// integral = Ln(cos(a_torqueArm)) - Ln(cos(gyro.angleMax))
 			var l_velocityPrecession = ((Math.log(Math.cos(a_torqueArm)) - Math.log(Math.cos(gyro.angleMax)))*Math.sin(gyro.angle))/(Math.pow(gyro.rotationalVelocity, 2)*4);
-			if(Math.cos(a_rotational) < 0) {
+			if(Math.cos(a_rotational) > 0) {
 				l_velocityPrecession = -l_velocityPrecession;
 			}
 			var v_velocityPrecession = v_group.clone().normalize().multiplyScalar(l_velocityPrecession);

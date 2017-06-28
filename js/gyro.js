@@ -17,7 +17,7 @@ function _gyro_gyro(gyro) {
 	gyro.sphereRadius = 16;
 	gyro.spheres = [];
 
-	gyro.angle = -20*(Math.PI/180);
+	gyro.angle = 0;
 	gyro.angleMax = Math.atan(gyro.orbitRadius/parent.heightBottomHolder);
 
 	parent.isAccelerating = false;
