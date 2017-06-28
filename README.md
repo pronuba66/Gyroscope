@@ -23,4 +23,4 @@ GPL
 <br />
 <br />
 <br />
-For additional queries contact [pronuba66@gmail.com](mailto:pronuba66@gmail.com)
+For additional queries contact pronuba66@gmail.com
