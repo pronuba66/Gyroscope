@@ -4,6 +4,9 @@ function _gyro_gyro(gyro) {
 	
 	var parent = gyro.gyroGyro = this;
 
+	gyro.isTranslucent = true;
+	$('#form input[name="malpha"').prop('checked', gyro.isTranslucent);
+
 	gyro.rotationalAcceleration = (Math.PI/180)*0.005;
 	gyro.rotationalVelocity = gyro.rotationalAcceleration*256;
 	gyro.precessionVelocity = 0;
@@ -41,7 +44,7 @@ function _gyro_gyro(gyro) {
 
 		var geometry = new THREE.Geometry();
 		// Outer Ring
-		mesh = new THREE.Mesh(new THREE.TorusGeometry(gyro.orbitRadius, gyro.sphereRadius, 16, gyro.numberOfSpheres*8));
+		mesh = new THREE.Mesh(new THREE.TorusGeometry(gyro.orbitRadius, gyro.sphereRadius, 16, gyro.numberOfSpheres));
 		mesh.castShadow = true;
 		mesh.receiveShadow = true;
 		mesh.rotation.x = Math.PI/2;
@@ -55,25 +58,20 @@ function _gyro_gyro(gyro) {
 		mesh.updateMatrix();
 		geometry.merge(mesh.geometry, mesh.matrix);
 
-		mesh = new THREE.Mesh(geometry, new THREE.MeshPhysicalMaterial({
-			color: 0xffffff,
-			transparent: true,
-			opacity: 0.05,
-			side: THREE.DoubleSide,
-			depthWrite: false,
-		}));
-		gyro.group.add(mesh);
+		gyro.centerGroup = new THREE.Mesh(geometry, new THREE.MeshPhysicalMaterial());
+		gyro.group.add(gyro.centerGroup);
 
 		// Top Holder
 		mesh = new THREE.Mesh(new THREE.CylinderGeometry(parent.radiusHolder, parent.radiusHolder, parent.heightTopHolder, gyro.numberOfSpheres*8), new THREE.MeshPhysicalMaterial({
-			color: 0xaaaaaa,
+			color: 0x9c7c3e,
 		}));
 		mesh.castShadow = true;
 		mesh.receiveShadow = true;
 		mesh.position.y = parent.heightTopHolder/2;
 		gyro.group.add(mesh);
+		// Bottom Holder
 		mesh = new THREE.Mesh(new THREE.CylinderGeometry(parent.radiusHolder, 0, parent.heightBottomHolder, gyro.numberOfSpheres*8), new THREE.MeshPhysicalMaterial({
-			color: 0xaaaaaa,
+			color: 0x9c7c3e,
 		}));
 		mesh.castShadow = true;
 		mesh.receiveShadow = true;
@@ -110,6 +108,13 @@ function _gyro_gyro(gyro) {
 		gyro.pivot.add(gyro.group);
 		gyro.pivot.rotation.z = this.angle;
 		gyro.scene.add(gyro.pivot);
+		$('#form input[name="malpha"').click(function(e) {
+			if($(this).is(':checked')) {
+				gyro.isTranslucent = true;
+			} else {
+				gyro.isTranslucent = false;
+			}
+		});
 		$('#form input[name="snutation"').change(function() {
 			var nutation = $(this).val();
 			gyro.angle = -($(this).val()/180)*Math.PI;
@@ -154,6 +159,19 @@ function _gyro_gyro(gyro) {
 			}
 			gyro.group.rotation.y += gyro.rotationalVelocity*gyro.frameRateScale;
 			gyro.pivot.rotation.y -= gyro.precessionVelocity*gyro.frameRateScale;
+		}
+		if(gyro.isTranslucent) {
+			gyro.centerGroup.material.color.set(0xffffff);
+			gyro.centerGroup.material.transparent = true;
+			gyro.centerGroup.material.opacity = 0.1;
+			gyro.centerGroup.material.side = THREE.DoubleSide;
+			gyro.centerGroup.material.depthWrite = false;
+		} else {
+			gyro.centerGroup.material.color.set(0xcccccc);
+			gyro.centerGroup.material.transparent = false;
+			gyro.centerGroup.material.opacity = 1;
+			gyro.centerGroup.material.side = THREE.SingleSide;
+			gyro.centerGroup.material.depthWrite = true;
 		}
 		gyro.pivot.rotation.z = gyro.angle;
 	}

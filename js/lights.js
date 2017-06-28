@@ -4,9 +4,9 @@ function _gyro_lights(gyroScene) {
 
 	var parent = gyroScene.gyroLights = this;
 
-	parent.light1 = new THREE.DirectionalLight(0xffffff, 1);
+	parent.light1 = new THREE.DirectionalLight(0xffffff, 0.4);
 	parent.light1Position = new THREE.Vector3(512, 512, 512);
-	parent.light2 = new THREE.AmbientLight(0xffffff, 0.6);
+	parent.light2 = new THREE.AmbientLight(0xffffff, 1.2);
 
 	parent.init = function() {
 		parent.light1.position.set(parent.light1Position.x, parent.light1Position.y, parent.light1Position.z);

@@ -3,13 +3,15 @@
 (function() {
 
 	var gyro = new _gyro_scene();
-	gyro.pause = false;
+	gyro.pause = true;
 	gyro.frameRateScale = 1;
 	new _gyro_renderer(gyro);
 	new _gyro_lights(gyro);
 	new _gyro_camera(gyro);
 	new _gyro_gyro(gyro);
 	new _gyro_arrows(gyro);
+	
+	$('#form input[name="mpause"').prop('checked', gyro.pause);
 
 	function init() {
 
@@ -24,6 +26,7 @@
 			switch(e.keyCode) {
 				case 80: {
 					gyro.pause = !gyro.pause;
+					$('#form input[name="mpause"').prop('checked', gyro.pause);
 					break;
 				}
 			}
@@ -31,7 +34,14 @@
 		$('#form').on('keydown', function(e) {
 			e.stopPropagation();
 		});
-		$('#form input[name="sspeed"').change(function() {
+		$('#form input[name="mpause"').click(function(e) {
+			if($(this).is(':checked')) {
+				gyro.pause = true;
+			} else {
+				gyro.pause = false;
+			}
+		});
+		$('#form input[name="sspeed"').change(function(e) {
 			gyro.frameRateScale = 1/parseInt($(this).val());
 		});
 		$('#form').click(function(e) {
