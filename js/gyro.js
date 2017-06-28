@@ -4,9 +4,6 @@ function _gyro_gyro(gyro) {
 	
 	var parent = gyro.gyroGyro = this;
 
-	gyro.isTranslucent = true;
-	$('#form input[name="malpha"]').prop('checked', gyro.isTranslucent);
-
 	gyro.rotationalAcceleration = (Math.PI/180)*0.005;
 	gyro.rotationalVelocity = gyro.rotationalAcceleration*256;
 	gyro.precessionVelocity = 0;
@@ -20,7 +17,7 @@ function _gyro_gyro(gyro) {
 	gyro.sphereRadius = 16;
 	gyro.spheres = [];
 
-	gyro.angle = 0;
+	gyro.angle = -($('#form input[name="snutation"]:checked').val()/180)*Math.PI;
 	gyro.angleMax = Math.atan(gyro.orbitRadius/parent.heightBottomHolder);
 
 	parent.isAccelerating = false;
@@ -174,5 +171,16 @@ function _gyro_gyro(gyro) {
 			gyro.centerGroup.material.depthWrite = true;
 		}
 		gyro.pivot.rotation.z = gyro.angle;
+		if(gyro.single) {
+			$(gyro.spheres).each(function(key, value) {
+				if(key !== 0) {
+					value.visible = false;
+				}
+			});
+		} else {
+			$(gyro.spheres).each(function(key, value) {
+				value.visible = true;
+			});
+		}
 	}
 }

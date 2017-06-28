@@ -19,19 +19,19 @@ function _gyro_arrows(gyro) {
 	for(var i=0; i<gyro.numberOfSpheres; i++) {
 		// Gravity
 		parent.arrowHelperAccelerationGravity.push(new THREE.ArrowHelper(gyro.gravity, new THREE.Vector3(0, 0, 0), gyro.gravity.length(), 0x0000ff));
-		parent.arrowHelperAccelerationGravity[i].visible = false;
+		parent.arrowHelperAccelerationGravity[i].visible = $('#form input[name="fgravity"]').is(':checked');
 
 		// Rotational
 		parent.arrowHelperAccelerationRotational.push(new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 0), 1, 0x00ff00));
-		parent.arrowHelperAccelerationRotational[i].visible = false;
+		parent.arrowHelperAccelerationRotational[i].visible = $('#form input[name="frotational"]').is(':checked');
 
 		// Torque due to gravity
 		parent.arrowHelperTorque.push(new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 0), 1, 0xffff00));
-		parent.arrowHelperTorque[i].visible = false;
+		parent.arrowHelperTorque[i].visible = $('#form input[name="ftorque"]').is(':checked');
 		
 		// Torque due to gravity vertical componenet
 		parent.arrowHelperTorqueVertical.push(new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 0), 1, 0xffff00));
-		parent.arrowHelperTorqueVertical[i].visible = false;
+		parent.arrowHelperTorqueVertical[i].visible = $('#form input[name="ftorquevertical"]').is(':checked');
 		
 		// Torque reference arm
 		geometry = new THREE.Geometry();
@@ -45,15 +45,15 @@ function _gyro_arrows(gyro) {
 			gapSize: 4,
 		})));
 		parent.arrowHelperReferenceTorqueArm[i].geometry.dynamic = true;
-		parent.arrowHelperReferenceTorqueArm[i].visible = false;
+		parent.arrowHelperReferenceTorqueArm[i].visible = $('#form input[name="ftorquereference"]').is(':checked');
 
 		// Rotational velocity
 		parent.arrowHelperVeclotyRotational.push(new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 0), 1, 0x00ff00));
-		parent.arrowHelperVeclotyRotational[i].visible = false;
+		parent.arrowHelperVeclotyRotational[i].visible = $('#form input[name="mrotational"]').is(':checked');
 
 		// Precession
 		parent.arrowHelperVelocityPrecession.push(new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 0), 1, 0xff00ff));
-		parent.arrowHelperVelocityPrecession[i].visible = false;
+		parent.arrowHelperVelocityPrecession[i].visible = $('#form input[name="mprecession"]').is(':checked');
 	}
 	// Torque reference axis
 	geometry = new THREE.Geometry();
@@ -68,7 +68,7 @@ function _gyro_arrows(gyro) {
 		gapSize: 4,
 	}));
 	parent.arrowHelperReferenceTorqueAxis.geometry.dynamic = true;
-	parent.arrowHelperReferenceTorqueAxis.visible = false;
+	parent.arrowHelperReferenceTorqueAxis.visible = $('#form input[name="ftorquereference"]').is(':checked');
 
 	parent.init = function() {
 		for(var i=0; i<gyro.numberOfSpheres; i++) {
@@ -169,7 +169,6 @@ function _gyro_arrows(gyro) {
 				});
 			}
 		});
-		$('#form input:checked').click().click();
 	}
 	parent.physics = function() {
 		gyro.pivot.updateMatrixWorld();
@@ -256,5 +255,42 @@ function _gyro_arrows(gyro) {
 		parent.arrowHelperReferenceTorqueAxis.geometry.vertices[0].set(v_torqueAxis.x, v_torqueAxis.y, v_torqueAxis.z);
 		parent.arrowHelperReferenceTorqueAxis.geometry.vertices[1].set(-v_torqueAxis.x, -v_torqueAxis.y, -v_torqueAxis.z);
 		parent.arrowHelperReferenceTorqueAxis.geometry.verticesNeedUpdate = true;
+
+
+		$(parent.arrowHelperAccelerationGravity).each(function(key, value) {
+			if(gyro.single && key !== 0) {
+				value.visible = false;
+			}
+		})
+		$(parent.arrowHelperAccelerationRotational).each(function(key, value) {
+			if(gyro.single && key !== 0) {
+				value.visible = false;
+			}
+		})
+		$(parent.arrowHelperReferenceTorqueArm).each(function(key, value) {
+			if(gyro.single && key !== 0) {
+				value.visible = false;
+			}
+		})
+		$(parent.arrowHelperTorque).each(function(key, value) {
+			if(gyro.single && key !== 0) {
+				value.visible = false;
+			}
+		})
+		$(parent.arrowHelperTorqueVertical).each(function(key, value) {
+			if(gyro.single && key !== 0) {
+				value.visible = false;
+			}
+		})
+		$(parent.arrowHelperVeclotyRotational).each(function(key, value) {
+			if(gyro.single && key !== 0) {
+				value.visible = false;
+			}
+		})
+		$(parent.arrowHelperVelocityPrecession).each(function(key, value) {
+			if(gyro.single && key !== 0) {
+				value.visible = false;
+			}
+		})
 	}
 }

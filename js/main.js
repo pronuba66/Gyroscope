@@ -3,8 +3,11 @@
 (function() {
 
 	var gyro = new _gyro_scene();
-	gyro.pause = true;
-	gyro.frameRateScale = 1;
+	gyro.pause = $('#form input[name="mpause"]').is(':checked');
+	gyro.frameRateScale = 1/parseInt($('#form input[name="sspeed"]:checked').val());
+	gyro.single = $('#form input[name="msingle"]').is(':checked');
+	gyro.isTranslucent = $('#form input[name="malpha"]').is(':checked');
+
 	new _gyro_renderer(gyro);
 	new _gyro_lights(gyro);
 	new _gyro_camera(gyro);
@@ -33,6 +36,13 @@
 		});
 		$('#form').on('keydown', function(e) {
 			e.stopPropagation();
+		});
+		$('#form input[name="msingle"]').click(function(e) {
+			if($(this).is(':checked')) {
+				gyro.single = true;
+			} else {
+				gyro.single = false;
+			}
 		});
 		$('#form input[name="mpause"]').click(function(e) {
 			if($(this).is(':checked')) {
