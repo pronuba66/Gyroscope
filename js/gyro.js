@@ -83,19 +83,19 @@ function _gyro_gyro(gyro) {
 		//Spheres
 		for(var i=0; i<gyro.numberOfSpheres; i++) {
 			var mesh;
-			if(i==0) {
+			/*if(i==0) {
 				mesh = new THREE.Mesh(new THREE.SphereGeometry(gyro.sphereRadius*0.8, 16, 8), new THREE.MeshPhysicalMaterial({
 					color: 0x333333,
 					transparent: true,
 					opacity: 0.4,
 				}));
-			} else {
+			} else {*/
 				mesh = new THREE.Mesh(new THREE.SphereGeometry(gyro.sphereRadius*0.8, 16, 8), new THREE.MeshLambertMaterial({
 					color: 0xffffff,
 					transparent: true,
 					opacity: 0.4,
 				}));
-			}
+			//}
 			var radius = gyro.orbitRadius;
 			var phi = Math.PI/2;
 			var theta = (i/gyro.numberOfSpheres)*(2*Math.PI);
