@@ -4,8 +4,8 @@ function _gyro_lights(gyroScene) {
 
 	var parent = gyroScene.gyroLights = this;
 
-	// parent.ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
-	// gyroScene.scene.add(parent.ambientLight);
+	parent.ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+	gyroScene.scene.add(parent.ambientLight);
 
 	parent.pointLight1 = new THREE.PointLight(0xffffff, 0.4, 1024);
 	parent.pointLight2 = new THREE.PointLight(0xffffff, 0.4, 1024);
