@@ -4,7 +4,12 @@ function _gyro_renderer(gyroScene) {
 
 	var parent = gyroScene.gyroRenderer = this;
 	
-	parent.renderer = new THREE.WebGLRenderer();
+	parent.renderer = new THREE.WebGLRenderer({
+		antialias: true,
+		sortObjects: false,
+		preserveDrawingBuffer: true,
+		shadowMapEnabled: true
+	});
 	$('#canvas').append(parent.renderer.domElement);
 	parent.dime = function() {
 		var ratio = window.innerWidth/window.innerHeight;

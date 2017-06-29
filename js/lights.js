@@ -4,16 +4,18 @@ function _gyro_lights(gyroScene) {
 
 	var parent = gyroScene.gyroLights = this;
 
-	parent.light1 = new THREE.DirectionalLight(0xffffff, 0.4);
-	parent.light1Position = new THREE.Vector3(512, 512, 512);
-	parent.light2 = new THREE.AmbientLight(0xffffff, 1.2);
+	parent.ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+	gyroScene.scene.add(parent.ambientLight);
+
+	parent.spotLight = new THREE.SpotLight(0xffffff, 0.8, 512, Math.PI/4);
+	parent.spotLight.position.set(128, 256, 128);
+	parent.spotLight.target.position.set(0, 0, 0);
+	parent.spotLight.castShadow = true;
+	parent.spotLight.shadow.mapSize.width = parent.spotLight.shadow.mapSize.height = 1024;
+	gyroScene.scene.add(parent.spotLight);
+	//gyroScene.scene.add(new THREE.SpotLightHelper(parent.spotLight));
 
 	parent.init = function() {
-		parent.light1.position.set(parent.light1Position.x, parent.light1Position.y, parent.light1Position.z);
-		parent.light1.rotation.x = Math.PI;
-		parent.light1.castShadow = true;
-		gyroScene.scene.add(parent.light1);
-		gyroScene.scene.add(parent.light2);
 	}
 	parent.physics = function() {
 	}

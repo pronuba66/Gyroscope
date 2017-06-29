@@ -8,7 +8,7 @@ function _gyro_gyro(gyro) {
 	gyro.rotationalVelocity = gyro.rotationalAcceleration*256;
 	gyro.precessionVelocity = 0;
 
-	parent.radiusHolder = 16;
+	parent.radiusHolder = 8;
 	parent.heightTopHolder = 48;
 	parent.heightBottomHolder = 96;
 	
@@ -24,51 +24,77 @@ function _gyro_gyro(gyro) {
 	gyro.group = new THREE.Object3D();
 	gyro.pivot = new THREE.Object3D();
 
+	parent.noiseTexture = (function(amount) {
+		var noiseSize = 512;
+		var size = noiseSize*noiseSize;
+		var data = new Uint8Array(4*size);
+		for (var i=0; i<size*4; i+=4) {
+		    data[i+0] = Math.round((1-Math.random()*amount)*255);
+		    data[i+1] = data[i];
+		    data[i+2] = data[i];
+		    data[i+3] = Math.round((1-Math.random()*amount)*255);
+		}
+		var texture = new THREE.DataTexture(data, noiseSize, noiseSize, THREE.RGBAFormat);
+		texture.wrapS = THREE.RepeatWrapping;
+		texture.wrapT = THREE.RepeatWrapping;
+		texture.needsUpdate = true;
+		return texture;
+	})(0.2);
 	parent.init = function() {
 		var mesh;
+		// Area
+		mesh = new THREE.Mesh(new THREE.BoxGeometry(12228, 12228, 1), new THREE.MeshLambertMaterial({
+			color: 0xcccccc,
+		}));
+		mesh.castShadow = true;
+		mesh.receiveShadow = true;
+		mesh.rotation.x = -Math.PI/2;
+		//gyro.scene.add(mesh);
+
 		// Holder
-		mesh = new THREE.Mesh(new THREE.CylinderGeometry(4, 12, 12228, gyro.numberOfSpheres*8), new THREE.MeshPhysicalMaterial({
+		mesh = new THREE.Mesh(new THREE.CylinderGeometry(4, 12, 12228, gyro.numberOfSpheres*8), new THREE.MeshLambertMaterial({
 			color: 0xffffff,
-			transparent: true,
-			opacity: 0.2,
-			side: THREE.DoubleSide,
 		}));
 		mesh.castShadow = true;
 		mesh.receiveShadow = true;
 		mesh.position.y = -12228/2;
-		mesh.updateMatrix();
 		gyro.scene.add(mesh);
 
-		var geometry = new THREE.Geometry();
 		// Outer Ring
-		mesh = new THREE.Mesh(new THREE.TorusGeometry(gyro.orbitRadius, gyro.sphereRadius, 16, gyro.numberOfSpheres));
+		mesh = new THREE.Mesh(new THREE.TorusGeometry(gyro.orbitRadius, gyro.sphereRadius, 16, gyro.numberOfSpheres*8), new THREE.MeshPhysicalMaterial({
+			color: 0xffffee,
+			map: parent.noiseTexture,
+		}));
+		mesh.rotation.x = Math.PI/2;
 		mesh.castShadow = true;
 		mesh.receiveShadow = true;
-		mesh.rotation.x = Math.PI/2;
-		mesh.updateMatrix();
-		geometry.merge(mesh.geometry, mesh.matrix);
+		parent.meshOuterRing = mesh;
+		gyro.group.add(mesh);
 
 		//Inner Plane
-		mesh = new THREE.Mesh(new THREE.CylinderGeometry(gyro.orbitRadius, gyro.orbitRadius, 2, gyro.numberOfSpheres*8));
+		mesh = new THREE.Mesh(new THREE.CylinderGeometry(gyro.orbitRadius, gyro.orbitRadius, 2, gyro.numberOfSpheres*8), new THREE.MeshPhysicalMaterial({
+			color: 0xffbe33,
+			map: parent.noiseTexture,
+		}));
 		mesh.castShadow = true;
 		mesh.receiveShadow = true;
-		mesh.updateMatrix();
-		geometry.merge(mesh.geometry, mesh.matrix);
-
-		gyro.centerGroup = new THREE.Mesh(geometry, new THREE.MeshPhysicalMaterial());
-		gyro.group.add(gyro.centerGroup);
+		parent.meshInnerPlane = mesh;
+		gyro.group.add(mesh);
 
 		// Top Holder
 		mesh = new THREE.Mesh(new THREE.CylinderGeometry(parent.radiusHolder, parent.radiusHolder, parent.heightTopHolder, gyro.numberOfSpheres*8), new THREE.MeshPhysicalMaterial({
-			color: 0x9c7c3e,
+			color: 0xffffff,
+			map: parent.noiseTexture,
 		}));
 		mesh.castShadow = true;
 		mesh.receiveShadow = true;
 		mesh.position.y = parent.heightTopHolder/2;
 		gyro.group.add(mesh);
+
 		// Bottom Holder
 		mesh = new THREE.Mesh(new THREE.CylinderGeometry(parent.radiusHolder, 0, parent.heightBottomHolder, gyro.numberOfSpheres*8), new THREE.MeshPhysicalMaterial({
-			color: 0x9c7c3e,
+			color: 0xffffff,
+			map: parent.noiseTexture,
 		}));
 		mesh.castShadow = true;
 		mesh.receiveShadow = true;
@@ -78,23 +104,17 @@ function _gyro_gyro(gyro) {
 		//Spheres
 		for(var i=0; i<gyro.numberOfSpheres; i++) {
 			var mesh;
-			/*if(i==0) {
-				mesh = new THREE.Mesh(new THREE.SphereGeometry(gyro.sphereRadius*0.8, 16, 8), new THREE.MeshPhysicalMaterial({
-					color: 0x333333,
-					transparent: true,
-					opacity: 0.4,
-				}));
-			} else {*/
-				mesh = new THREE.Mesh(new THREE.SphereGeometry(gyro.sphereRadius*0.8, 16, 8), new THREE.MeshLambertMaterial({
-					color: 0xffffff,
-					transparent: true,
-					opacity: 0.4,
-				}));
-			//}
 			var radius = gyro.orbitRadius;
 			var phi = Math.PI/2;
 			var theta = (i/gyro.numberOfSpheres)*(2*Math.PI);
 			var v = new THREE.Vector3().setFromSpherical(new THREE.Spherical(radius, phi, theta));
+			mesh = new THREE.Mesh(new THREE.SphereGeometry(gyro.sphereRadius*0.8, 16, 16), new THREE.MeshBasicMaterial({
+				color: 0xffffff,
+				transparent: true,
+				opacity: 0.25,
+				depthWrite: false,
+				depthTest: true,
+			}));
 			mesh.castShadow = true;
 			mesh.receiveShadow = true;
 			mesh.position.set(v.x, v.y, v.z);
@@ -102,8 +122,12 @@ function _gyro_gyro(gyro) {
 			gyro.group.add(mesh);
 		}
 		gyro.group.position.y = parent.heightBottomHolder;
+		// gyro.group.castShadow = true;
+		// gyro.group.receiveShadow = true;
 		gyro.pivot.add(gyro.group);
 		gyro.pivot.rotation.z = this.angle;
+		// gyro.pivot.castShadow = true;
+		// gyro.pivot.receiveShadow = true;
 		gyro.scene.add(gyro.pivot);
 		$('#form input[name="malpha"]').click(function(e) {
 			if($(this).is(':checked')) {
@@ -158,17 +182,23 @@ function _gyro_gyro(gyro) {
 			gyro.pivot.rotation.y -= gyro.precessionVelocity*gyro.frameRateScale;
 		}
 		if(gyro.isTranslucent) {
-			gyro.centerGroup.material.color.set(0xffffff);
-			gyro.centerGroup.material.transparent = true;
-			gyro.centerGroup.material.opacity = 0.1;
-			gyro.centerGroup.material.side = THREE.DoubleSide;
-			gyro.centerGroup.material.depthWrite = false;
+			parent.meshOuterRing.material.color.set(0xffffff);
+			parent.meshOuterRing.material.map = null;
+			parent.meshOuterRing.material.needsUpdate = true;
+			parent.meshOuterRing.material.transparent = true;
+			parent.meshOuterRing.material.opacity = 0.25;
+			parent.meshOuterRing.material.depthWrite = false;
+			parent.meshOuterRing.material.depthTest = true;
+			parent.meshInnerPlane.visible = false;
 		} else {
-			gyro.centerGroup.material.color.set(0xcccccc);
-			gyro.centerGroup.material.transparent = false;
-			gyro.centerGroup.material.opacity = 1;
-			gyro.centerGroup.material.side = THREE.SingleSide;
-			gyro.centerGroup.material.depthWrite = true;
+			parent.meshOuterRing.material.color.set(0xffffee);
+			parent.meshOuterRing.material.map = parent.noiseTexture;
+			parent.meshOuterRing.material.needsUpdate = true;
+			parent.meshOuterRing.material.transparent = false;
+			parent.meshOuterRing.material.opacity = 1;
+			parent.meshOuterRing.material.depthWrite = true;
+			parent.meshOuterRing.material.depthTest = true;
+			parent.meshInnerPlane.visible = true;
 		}
 		gyro.pivot.rotation.z = gyro.angle;
 		if(gyro.single) {
