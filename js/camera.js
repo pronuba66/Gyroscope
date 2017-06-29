@@ -8,7 +8,7 @@ function _gyro_camera(gyro) {
 	parent.phi = Math.PI/3;
 	parent.theta = 0;
 
-	gyro.camera = new THREE.PerspectiveCamera(60, 16/9, 1, 8192);
+	gyro.camera = new THREE.PerspectiveCamera(45, 16/9, 1, 8192);
 
 	parent.init = function() {
 
