@@ -99,92 +99,60 @@ function _gyro_arrows(gyro) {
 
 		$('#form input[name="fgravity"]').click(function(e) {
 			if($(this).is(':checked')) {
-				$(parent.arrowHelperAccelerationGravity).each(function(key, value) {
-					value.visible = true;
-				});
+				parent.arrowHelperAccelerationGravity[0].visible = true;
 			} else {
-				$(parent.arrowHelperAccelerationGravity).each(function(key, value) {
-					value.visible = false;
-				});
+				parent.arrowHelperAccelerationGravity[0].visible = false;
 			}
 		});
 		$('#form input[name="frotational"]').click(function(e) {
 			if($(this).is(':checked')) {
-				$(parent.arrowHelperAccelerationRotational).each(function(key, value) {
-					value.visible = true;
-				});
+				parent.arrowHelperAccelerationRotational[0].visible = true;
 			} else {
-				$(parent.arrowHelperAccelerationRotational).each(function(key, value) {
-					value.visible = false;
-				});
+				parent.arrowHelperAccelerationRotational[0].visible = false;
 			}
 		});
 		$('#form input[name="ftorque"]').click(function(e) {
 			if($(this).is(':checked')) {
-				$(parent.arrowHelperTorque).each(function(key, value) {
-					value.visible = true;
-				});
+				parent.arrowHelperTorque[0].visible = true;
 			} else {
-				$(parent.arrowHelperTorque).each(function(key, value) {
-					value.visible = false;
-				});
+				parent.arrowHelperTorque[0].visible = false;
 			}
 		});
 		$('#form input[name="ftorquevertical"]').click(function(e) {
 			if($(this).is(':checked')) {
-				$(parent.arrowHelperTorqueVertical).each(function(key, value) {
-					value.visible = true;
-				});
+				parent.arrowHelperTorqueVertical[0].visible = true;
 			} else {
-				$(parent.arrowHelperTorqueVertical).each(function(key, value) {
-					value.visible = false;
-				});
+				parent.arrowHelperTorqueVertical[0].visible = false;
 			}
 		});
 		$('#form input[name="ftorquehorizontal"]').click(function(e) {
 			if($(this).is(':checked')) {
-				$(parent.arrowHelperTorqueHorizontal).each(function(key, value) {
-					value.visible = true;
-				});
+				parent.arrowHelperTorqueHorizontal[0].visible = true;
 			} else {
-				$(parent.arrowHelperTorqueHorizontal).each(function(key, value) {
-					value.visible = false;
-				});
+				parent.arrowHelperTorqueHorizontal[0].visible = false;
 			}
 		});
 		$('#form input[name="ftorquereference"]').click(function(e) {
 			if($(this).is(':checked')) {
-				$(parent.arrowHelperReferenceTorqueArm).each(function(key, value) {
-					value.visible = true;
-				});
+				parent.arrowHelperReferenceTorqueArm[0].visible = true;
 				parent.arrowHelperReferenceTorqueAxis.visible = true;
 			} else {
-				$(parent.arrowHelperReferenceTorqueArm).each(function(key, value) {
-					value.visible = false;
-				});
+				parent.arrowHelperReferenceTorqueArm[0].visible = false;
 				parent.arrowHelperReferenceTorqueAxis.visible = false;
 			}
 		});
 		$('#form input[name="mrotational"]').click(function(e) {
 			if($(this).is(':checked')) {
-				$(parent.arrowHelperVeclotyRotational).each(function(key, value) {
-					value.visible = true;
-				});
+				parent.arrowHelperVeclotyRotational[0].visible = true;
 			} else {
-				$(parent.arrowHelperVeclotyRotational).each(function(key, value) {
-					value.visible = false;
-				});
+				parent.arrowHelperVeclotyRotational[0].visible = false;
 			}
 		});
 		$('#form input[name="mprecession"]').click(function(e) {
 			if($(this).is(':checked')) {
-				$(parent.arrowHelperVelocityPrecession).each(function(key, value) {
-					value.visible = true;
-				});
+				parent.arrowHelperVelocityPrecession[0].visible = true;
 			} else {
-				$(parent.arrowHelperVelocityPrecession).each(function(key, value) {
-					value.visible = false;
-				});
+				parent.arrowHelperVelocityPrecession[0].visible = false;
 			}
 		});
 	}
@@ -292,41 +260,57 @@ function _gyro_arrows(gyro) {
 		$(parent.arrowHelperAccelerationGravity).each(function(key, value) {
 			if(gyro.single && key !== 0) {
 				value.visible = false;
+			} else {
+				value.visible = parent.arrowHelperAccelerationGravity[0].visible;
 			}
 		})
 		$(parent.arrowHelperAccelerationRotational).each(function(key, value) {
 			if(gyro.single && key !== 0) {
 				value.visible = false;
+			} else {
+				value.visible = parent.arrowHelperAccelerationRotational[0].visible;
 			}
 		})
 		$(parent.arrowHelperReferenceTorqueArm).each(function(key, value) {
 			if(gyro.single && key !== 0) {
 				value.visible = false;
+			} else {
+				value.visible = parent.arrowHelperReferenceTorqueArm[0].visible;
 			}
 		})
 		$(parent.arrowHelperTorque).each(function(key, value) {
 			if(gyro.single && key !== 0) {
 				value.visible = false;
+			} else {
+				value.visible = parent.arrowHelperTorque[0].visible;
 			}
 		})
 		$(parent.arrowHelperTorqueVertical).each(function(key, value) {
 			if(gyro.single && key !== 0) {
 				value.visible = false;
+			} else {
+				value.visible = parent.arrowHelperTorqueVertical[0].visible;
 			}
 		})
 		$(parent.arrowHelperTorqueHorizontal).each(function(key, value) {
 			if(gyro.single && key !== 0) {
 				value.visible = false;
+			} else {
+				value.visible = parent.arrowHelperTorqueHorizontal[0].visible;
 			}
 		})
 		$(parent.arrowHelperVeclotyRotational).each(function(key, value) {
 			if(gyro.single && key !== 0) {
 				value.visible = false;
+			} else {
+				value.visible = parent.arrowHelperVeclotyRotational[0].visible;
 			}
 		})
 		$(parent.arrowHelperVelocityPrecession).each(function(key, value) {
 			if(gyro.single && key !== 0) {
 				value.visible = false;
+			} else {
+				value.visible = parent.arrowHelperVelocityPrecession[0].visible;
 			}
 		})
 	}

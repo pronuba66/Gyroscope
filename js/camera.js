@@ -26,8 +26,8 @@ function _gyro_camera(gyro) {
 				if(parent.radius<32) {
 					parent.radius = 32;
 				}
-				if(parent.radius>1024) {
-					parent.radius = 1024;
+				if(parent.radius>512) {
+					parent.radius = 512;
 				}
 			}
 			return false;
@@ -45,8 +45,8 @@ function _gyro_camera(gyro) {
 				//-
 				case 189: {
 					parent.radius += 32;
-					if(parent.radius>1024) {
-						parent.radius = 1024;
+					if(parent.radius>512) {
+						parent.radius = 512;
 					}
 					break;
 				}

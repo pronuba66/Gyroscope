@@ -25,6 +25,16 @@
 		gyro.gyroGyro.init();
 		gyro.gyroArrows.init();
 
+
+		// var mesh = new THREE.Mesh(new THREE.OctahedronGeometry(512, 4),
+		// 	new THREE.MeshLambertMaterial({
+		// 		color: 0xffffff,
+		// 		side: THREE.BackSide,
+		// 	}));
+		// mesh.castShadow = true;
+		// mesh.receiveShadow = true;
+		// gyro.scene.add(mesh);
+
 		$(document).on('keydown', function(e) {
 			switch(e.keyCode) {
 				case 80: {

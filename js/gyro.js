@@ -42,15 +42,6 @@ function _gyro_gyro(gyro) {
 	})(0.2);
 	parent.init = function() {
 		var mesh;
-		// Area
-		mesh = new THREE.Mesh(new THREE.BoxGeometry(12228, 12228, 1), new THREE.MeshLambertMaterial({
-			color: 0xcccccc,
-		}));
-		mesh.castShadow = true;
-		mesh.receiveShadow = true;
-		mesh.rotation.x = -Math.PI/2;
-		//gyro.scene.add(mesh);
-
 		// Holder
 		mesh = new THREE.Mesh(new THREE.CylinderGeometry(4, 12, 12228, gyro.numberOfSpheres*8), new THREE.MeshLambertMaterial({
 			color: 0xffffff,
