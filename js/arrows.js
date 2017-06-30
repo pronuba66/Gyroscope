@@ -180,7 +180,7 @@ function _gyro_arrows(gyro) {
 			var v_torqueVertical = v_group.clone().multiplyScalar(l_torqueVertical);
 
 			var v_torqueHorizontal = v_group.clone().cross(v_anglePointer);
-			var l_torqueHorizontal = v_torqueHorizontal.clone().normalize().dot(v_torque);
+			var l_torqueHorizontal = Math.sqrt(Math.pow(l_torque, 2)-Math.pow(l_torqueVertical, 2));
 			
 			var l_velocityRotational = gyro.rotationalVelocity*1024;
 			// (sin(a_torqueArm)/cos(a_torqueArm)
