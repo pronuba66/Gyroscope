@@ -176,8 +176,9 @@ function _gyro_arrows(gyro) {
 			if(Math.sin(a_rotational) < 0) {
 				a_torqueArm = -a_torqueArm;
 			}
-			var l_torqueVertical = v_group.clone().normalize().dot(v_torque);
-			var v_torqueVertical = v_group.clone().multiplyScalar(l_torqueVertical);
+			var a_torque = v_group.angleTo(v_torque);
+			var l_torqueVertical = -l_torque*Math.cos(a_torque);
+			var v_torqueVertical = v_group.clone().normalize().multiplyScalar(l_torqueVertical);
 
 			var v_torqueHorizontal = v_group.clone().cross(v_anglePointer);
 			var l_torqueHorizontal = Math.sqrt(Math.pow(l_torque, 2)-Math.pow(l_torqueVertical, 2));
