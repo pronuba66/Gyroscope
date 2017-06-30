@@ -11,27 +11,7 @@ function _gyro_camera(gyro) {
 	gyro.camera = new THREE.PerspectiveCamera(45, 16/9, 1, 8192);
 
 	parent.init = function() {
-
-		$('#canvas').on('scroll touchmove mousewheel', function(e){
-			e.preventDefault();
-			e.stopPropagation();
-			e.delta = null;
-			if(e.originalEvent) {
-				if(e.originalEvent.wheelDelta) e.delta = e.originalEvent.wheelDelta/-40;
-				if(e.originalEvent.deltaY) e.delta = e.originalEvent.deltaY;
-				if(e.originalEvent.detail) e.delta = e.originalEvent.detail;
-			}
-			if(e.delta != null) {
-				parent.radius -= e.delta;
-				if(parent.radius<32) {
-					parent.radius = 32;
-				}
-				if(parent.radius>512) {
-					parent.radius = 512;
-				}
-			}
-			return false;
-		});
+		
 		$(document).on('keydown', function(e) {
 			switch(e.keyCode) {
 				//+
