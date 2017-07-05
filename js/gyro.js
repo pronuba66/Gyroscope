@@ -32,7 +32,7 @@ function _gyro_gyro(gyro) {
 		    data[i+0] = Math.round((1-Math.random()*amount)*255);
 		    data[i+1] = data[i];
 		    data[i+2] = data[i];
-		    data[i+3] = Math.round((1-Math.random()*amount)*255);
+		    data[i+3] = Math.round(Math.random());
 		}
 		var texture = new THREE.DataTexture(data, noiseSize, noiseSize, THREE.RGBAFormat);
 		texture.wrapS = THREE.RepeatWrapping;
@@ -170,7 +170,7 @@ function _gyro_gyro(gyro) {
 				gyro.rotationalVelocity += gyro.rotationalAcceleration*gyro.frameRateScale;
 			}
 			gyro.group.rotation.y += gyro.rotationalVelocity*gyro.frameRateScale;
-			gyro.pivot.rotation.y -= gyro.precessionVelocity*gyro.frameRateScale;
+			gyro.pivot.rotation.y -= gyro.precessionVelocity*gyro.frameRateScale*2;
 		}
 		if(gyro.isTranslucent) {
 			parent.meshOuterRing.material.color.set(0xffffff);

@@ -222,7 +222,7 @@
 				if(e.originalEvent.detail) e.delta = e.originalEvent.detail;
 			}
 			if(e.delta != null) {
-				gyro.gyroCamera.radius -= e.delta;
+				gyro.gyroCamera.radius += e.delta;
 				if(gyro.gyroCamera.radius<32) {
 					gyro.gyroCamera.radius = 32;
 				}

@@ -1,8 +1,8 @@
 
 "use strict";
-function _gyro_renderer(gyroScene) {
+function _gyro_renderer(gyro) {
 
-	var parent = gyroScene.gyroRenderer = this;
+	var parent = gyro.gyroRenderer = this;
 	
 	parent.renderer = new THREE.WebGLRenderer({
 		antialias: true,
