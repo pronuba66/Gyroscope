@@ -75,15 +75,15 @@
 		$('#form .button').click(function(e) {
 			$('#form').toggleClass('hidden')
 		});
-		$('#form').on('mousedown', function(e) {
+		/*$('#form').on('mousedown', function(e) {
 			$('#form').css({opacity: 0.25 });
 		});
-		$('#form').on('mouseup', function(e) {
+		$('#form').on('mouseup mouseleave', function(e) {
 			$('#form').css({opacity: 1 });
 		});
 		$('#form').on('mouseleave', function(e) {
 			$('#form').css({opacity: 1 });
-		});
+		});*/
 		$('#canvas').attr('tabindex', '-1');
 		$('#canvas').focus();
 		$('#canvas').click();
@@ -264,7 +264,7 @@
 		}
 		tref = requestAnimationFrame(loop);
 	}
-	fpsControl(60, animate);
+	fpsControl(30, animate);
 
 	init();
 	animate();

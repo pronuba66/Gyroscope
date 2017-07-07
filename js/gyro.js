@@ -169,7 +169,7 @@ function _gyro_gyro(gyro) {
 			if(parent.isAccelerating) {
 				gyro.rotationalVelocity += gyro.rotationalAcceleration*gyro.frameRateScale;
 			}
-			gyro.group.rotation.y += gyro.rotationalVelocity*gyro.frameRateScale;
+			gyro.group.rotation.y += gyro.rotationalVelocity*gyro.frameRateScale*2;
 			gyro.pivot.rotation.y -= gyro.precessionVelocity*gyro.frameRateScale*2;
 		}
 		if(gyro.isTranslucent) {
