@@ -68,14 +68,23 @@ function _gyro_camera(gyro) {
 		});
 	}
 	parent.physics = function() {
-		var v = new THREE.Vector3().setFromSpherical(new THREE.Spherical(parent.radius, parent.phi, parent.theta));
 		gyro.group.updateMatrixWorld();
-		var w = new THREE.Vector3().setFromMatrixPosition(gyro.group.matrixWorld).normalize().multiplyScalar(512);
-		gyro.camera1.position.set(v.x, v.y, v.z);
+		gyro.spheres[0].updateMatrixWorld();
+		var v_gyro = new THREE.Vector3().setFromMatrixPosition(gyro.group.matrixWorld);
+		var v_sphere = new THREE.Vector3().setFromMatrixPosition(gyro.spheres[0].matrixWorld);
+		var v_camera1 = new THREE.Vector3().setFromSpherical(new THREE.Spherical(parent.radius, parent.phi, parent.theta));
+		var v_camera2 = v_sphere.clone().add(v_gyro);
+		//var v_camera2 = v_sphere.clone().sub(v_gyro).normalize().multiplyScalar(512).add(v_gyro);
+		gyro.camera1.position.set(v_camera1.x, v_camera1.y, v_camera1.z);
 		gyro.camera1.lookAt(new THREE.Vector3(gyro.group.position.x, gyro.group.position.y/2, gyro.group.position.z));
-		gyro.camera2.position.set(w.x, w.y, w.z);
-		gyro.camera2.lookAt(new THREE.Vector3(gyro.group.position.x, gyro.group.position.y/2, gyro.group.position.z));
-		var r = parent.radius/512;
+		
+		gyro.camera2.position.set(v_camera2.x, v_camera2.y, v_camera2.z);
+		//gyro.camera2.position.set(v_camera2.x, v_camera2.y, v_camera2.z);
+		gyro.camera2.lookAt(v_sphere);
+		//gyro.camera2.rotation.x = gyro.gyroArrows.arrowHelperTorqueVertical[0].rotation.x;
+		//gyro.camera2.rotation.y = gyro.gyroArrows.arrowHelperTorqueVertical[0].rotation.y;
+		//gyro.camera2.rotation.z = gyro.gyroArrows.arrowHelperTorqueVertical[0].rotation.z;
+		var r = parent.radius/1024;
 		gyro.camera2.left = -r*960;
 		gyro.camera2.right = r*960;
 		gyro.camera2.top = r*540;

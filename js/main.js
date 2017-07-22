@@ -3,7 +3,9 @@
 (function() {
 
 	var gyro = new _gyro_scene();
+	gyro.fps = 60;
 	gyro.pause = $('#form input[name="mpause"]').is(':checked');
+	gyro.fpsScale = 30/gyro.fps;
 	gyro.frameRateScale = 1/parseInt($('#form input[name="sspeed"]:checked').val());
 	gyro.single = $('#form input[name="msingle"]').is(':checked');
 	gyro.isTranslucent = $('#form input[name="malpha"]').is(':checked');
@@ -243,28 +245,25 @@
 		gyro.gyroRenderer.renderer.render(gyro.scene, gyro.camera);
 		gyro.frameSkipCount++;
 	}
-	function fpsControl(fps, callback) {
+	function fpsControl(fps) {
 		var delay = 1000/fps;
 		var time = null;
 		var frame = -1;
 		var tref;
 		function loop(timestamp) {
+			tref = requestAnimationFrame(loop)
 			if(time === null) {
 				time = timestamp;
 			}
 			var seg = Math.floor((timestamp-time)/delay);
 			if (seg>frame) {
 				frame = seg;
-				callback({
-					time: timestamp,
-					frame: frame
-				})
+				animate();
 			}
-			tref = requestAnimationFrame(loop)
 		}
 		tref = requestAnimationFrame(loop);
 	}
-	fpsControl(30, animate);
+	fpsControl(gyro.fps);
 
 	init();
 	animate();

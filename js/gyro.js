@@ -167,10 +167,10 @@ function _gyro_gyro(gyro) {
 	parent.physics = function() {
 		if(!gyro.pause) {
 			if(parent.isAccelerating) {
-				gyro.rotationalVelocity += gyro.rotationalAcceleration*gyro.frameRateScale;
+				gyro.rotationalVelocity += gyro.rotationalAcceleration*gyro.frameRateScale*gyro.fpsScale;
 			}
-			gyro.group.rotation.y += gyro.rotationalVelocity*gyro.frameRateScale*2;
-			gyro.pivot.rotation.y -= gyro.precessionVelocity*gyro.frameRateScale*2;
+			gyro.group.rotation.y += gyro.rotationalVelocity*gyro.frameRateScale*gyro.fpsScale*2;
+			gyro.pivot.rotation.y -= gyro.precessionVelocity*gyro.frameRateScale*gyro.fpsScale*2;
 		}
 		if(gyro.isTranslucent) {
 			parent.meshOuterRing.material.color.set(0xffffff);
