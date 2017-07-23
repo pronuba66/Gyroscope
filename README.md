@@ -1,6 +1,6 @@
 # Gyroscope Working
 
-Simulator shows how the gyroscopic precession works. This simulator is my understanding of the gyroscope. Neither the input measurments nor the resultants are valid and may be used for only educational purposes.
+Simulator shows how the gyroscopic precession works. This simulator is my understanding of the gyroscope. Neither the input measurments nor the resultants are valid and may be used only for educational purposes.
 
 ### Controls
 

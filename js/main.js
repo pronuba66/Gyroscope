@@ -251,7 +251,6 @@
 		var frame = -1;
 		var tref;
 		function loop(timestamp) {
-			tref = requestAnimationFrame(loop)
 			if(time === null) {
 				time = timestamp;
 			}
@@ -260,6 +259,7 @@
 				frame = seg;
 				animate();
 			}
+			tref = requestAnimationFrame(loop);
 		}
 		tref = requestAnimationFrame(loop);
 	}
